@@ -50,6 +50,11 @@ namespace JohnForteLibrary.Domain
             DueDate = DateTime.Now.AddDays(21);
         }
 
+        public void CheckinBook()
+        {
+            IsCheckedOut = false;
+        }
+
 
     }
 }
