@@ -94,7 +94,7 @@ namespace JohnForteLibrary.API.Controllers
                 return NotFound($"There is no library card matching the number {cardnumber}");
             }
 
-            var books = await _bookRepo.FindBySpecification(new BooksByPatronIdSpecification());
+            var books = await _bookRepo.FindBySpecification(new BooksByPatronIdSpecification(borrowers[0].Id));
 
             var bookDtos = books.Select(x => MapBook(x)).ToList();
 
@@ -193,16 +193,16 @@ namespace JohnForteLibrary.API.Controllers
 
         [Route("[controller]/CheckIn")]
         [HttpPut]
-        public async Task<IActionResult> CheckInBook(CheckInBookRequest request)
+        public async Task<IActionResult> CheckInBook(ReturnBookRequest request)
         {
-            var bookToCheckIn = await _bookRepo.FindById(request.bookId);
+            var bookToCheckIn = await _bookRepo.FindById(request.BookId);
 
             if (bookToCheckIn == null)
             {
                 return NotFound($"There is no book with id {request.BookId}");
             }
 
-            bookToCheckIn.CheckInBook();
+            bookToCheckIn.CheckinBook();
 
             await _writableBooksRepo.Update(bookToCheckIn);
 
