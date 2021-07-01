@@ -23,13 +23,19 @@ mono_crash.*
 [Rr]eleases/
 x64/
 x86/
+<<<<<<< HEAD
 [Ww][Ii][Nn]32/
+=======
+>>>>>>> 20775b77b024b9e1f68756519343644e31805903
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
 [Bb]in/
 [Oo]bj/
+<<<<<<< HEAD
 [Oo]ut/
+=======
+>>>>>>> 20775b77b024b9e1f68756519343644e31805903
 [Ll]og/
 [Ll]ogs/
 
@@ -62,8 +68,13 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+
+<<<<<<< HEAD
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
+
+=======
+>>>>>>> 20775b77b024b9e1f68756519343644e31805903
 # StyleCop
 StyleCopReport.xml
 
@@ -359,3 +370,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
