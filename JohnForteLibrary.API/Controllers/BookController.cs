@@ -70,7 +70,31 @@ namespace JohnForteLibrary.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAvailable()
         {
+
             var books = await _bookRepo.FindBySpecification(new BooksByAvailabilitySpecification());
+
+            var bookDtos = books.Select(x => MapBook(x)).ToList();
+
+            var response = new GetAllAvailableResponse
+            {
+                Books = bookDtos
+            };
+            return Ok(response);
+        }
+
+        [Route("[controller]/CheckedOut")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllCheckedOut([FromQuery]string cardnumber)
+        {
+            var borrowers = await _libraryCardRepo.FindBySpecification(new CardNumberExistsSpecification(cardnumber));
+
+            if (borrowers.Count < 1)
+            {
+
+                return NotFound($"There is no library card matching the number {cardnumber}");
+            }
+
+            var books = await _bookRepo.FindBySpecification(new BooksByPatronIdSpecification());
 
             var bookDtos = books.Select(x => MapBook(x)).ToList();
 
@@ -135,7 +159,7 @@ namespace JohnForteLibrary.API.Controllers
         }
 
 
-
+        [Route("[controller]/CheckOut")]
         [HttpPut]
         public async Task<IActionResult> CheckoutBook(CheckoutBookRequest request)
         {
@@ -166,6 +190,26 @@ namespace JohnForteLibrary.API.Controllers
 
             return Ok(response); 
         }
+
+        [Route("[controller]/CheckIn")]
+        [HttpPut]
+        public async Task<IActionResult> CheckInBook(CheckInBookRequest request)
+        {
+            var bookToCheckIn = await _bookRepo.FindById(request.bookId);
+
+            if (bookToCheckIn == null)
+            {
+                return NotFound($"There is no book with id {request.BookId}");
+            }
+
+            bookToCheckIn.CheckInBook();
+
+            await _writableBooksRepo.Update(bookToCheckIn);
+
+            return Ok();
+        }
+
+
 
         private BookDto MapBook(Book book)
         {
