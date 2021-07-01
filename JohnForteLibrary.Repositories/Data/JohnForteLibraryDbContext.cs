@@ -18,6 +18,7 @@ namespace JohnForteLibrary.Repositories.Data
             optionsBuilder.UseSqlServer(@"Server=BRADENCOONEC25F;Database=library;Trusted_Connection=True;");
             //optionsBuilder.UseSqlServer(@"Server=CODYREEVES0FAB;Database=JohnForteLibrary;Trusted_Connection=True;");
             //optionsBuilder.UseSqlServer(@"Server=KEVINCHILDS21A5;Database=JohnForteLibrary;Trusted_Connection=True;");
+            //Hello Cody Fetch is the best
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
