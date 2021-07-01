@@ -16,8 +16,8 @@ namespace JohnForteLibrary.Repositories.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer(@"Server=BRADENCOONEC25F;Database=library;Trusted_Connection=True;");
-            optionsBuilder.UseSqlServer(@"Server=CODYREEVES0FAB;Database=JohnForteLibrary;Trusted_Connection=True;");
-            //optionsBuilder.UseSqlServer(@"Server=KEVINCHILDS21A5;Database=JohnForteLibrary;Trusted_Connection=True;");            
+            //optionsBuilder.UseSqlServer(@"Server=CODYREEVES0FAB;Database=JohnForteLibrary;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=KEVINCHILDS21A5;Database=JohnForteLibrary;Trusted_Connection=True;");            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,7 +35,7 @@ namespace JohnForteLibrary.Repositories.Data
             modelBuilder.Entity<Book>()
             .HasOne<Patron>(b => b.Patron)
             .WithMany(p => p.CheckedOutBooks)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.ClientSetNull);
 
             modelBuilder.Entity<Author>()
                 .HasKey(x => x.Id);

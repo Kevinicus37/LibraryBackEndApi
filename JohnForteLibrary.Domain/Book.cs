@@ -53,6 +53,7 @@ namespace JohnForteLibrary.Domain
         public void CheckinBook()
         {
             IsCheckedOut = false;
+            Patron = null;
         }
 
 
