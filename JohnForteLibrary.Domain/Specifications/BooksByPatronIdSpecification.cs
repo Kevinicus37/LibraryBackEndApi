@@ -18,7 +18,7 @@ namespace JohnForteLibrary.Domain.Specifications
         {
             if(PatronId != 0)
             {
-                return x => x.Patron.Id == PatronId;
+                return x => x.Patron.Id == PatronId && x.IsCheckedOut;
             }
 
             return x => true;
