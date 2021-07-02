@@ -14,5 +14,6 @@ namespace JohnForteLibrary.API.Dtos
         public List<string> Authors { get; set; }       
         public string ISBN { get; set; }
         public int PublishedYear { get; set; }
+        public bool IsOverdue { get; set; }
     }
 }
