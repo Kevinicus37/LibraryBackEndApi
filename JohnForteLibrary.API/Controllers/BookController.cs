@@ -215,7 +215,8 @@ namespace JohnForteLibrary.API.Controllers
         {
             if (book != null)
             {
-                var dueDate = (DateTime)book.DueDate;
+                var dueDate = book.DueDate != null ? (DateTime)book.DueDate : DateTime.Today;
+
                 return new BookDto
                 {
                     BookId = book.Id,
@@ -223,7 +224,7 @@ namespace JohnForteLibrary.API.Controllers
                     Authors = book.Authors.Select(x => x.Name).ToList(),
                     ISBN = book.ISBN.Value,
                     PublishedYear = book.PublishedYear,
-                    IsOverdue = book.IsCheckedOut && DateTime.Now.Date > dueDate.Date
+                    IsOverdue = book.IsCheckedOut && DateTime.Today > dueDate.Date
                 };
             }
             return null;
