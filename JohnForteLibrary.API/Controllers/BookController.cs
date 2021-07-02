@@ -215,13 +215,15 @@ namespace JohnForteLibrary.API.Controllers
         {
             if (book != null)
             {
+                var dueDate = (DateTime)book.DueDate;
                 return new BookDto
                 {
                     BookId = book.Id,
                     Title = book.Title,
                     Authors = book.Authors.Select(x => x.Name).ToList(),
                     ISBN = book.ISBN.Value,
-                    PublishedYear = book.PublishedYear
+                    PublishedYear = book.PublishedYear,
+                    IsOverdue = book.IsCheckedOut && DateTime.Now.Date > dueDate.Date
                 };
             }
             return null;
