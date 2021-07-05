@@ -105,6 +105,47 @@ namespace JohnForteLibrary.API.Controllers
             return Ok(response);
         }
 
+        [Route("/api/Book/Info/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetBookInfo(int id)
+        {
+            var book = await _bookRepo.FindById(id);
+
+            if (book==null)
+            {
+                return NotFound($"There is no book with id {id}");
+            }
+
+            if (book.Patron != null) {
+                var patronDto = new PatronDto
+                {
+                    Name = book.Patron.Name.ToString(),
+                    Address = book.Patron.Address.ToString(),
+                    PhoneNumber = book.Patron.PhoneNumber != null ? book.Patron.PhoneNumber.ToString() : "",
+                    Email = book.Patron.Email != null ? book.Patron.Email.ToString() : "",
+                    CardNumber = book.Patron.Card.CardNumber
+                };
+
+                var dueDate = (DateTime)book.DueDate;
+                var checkoutDate = (DateTime)book.CheckedOutDate;
+
+                var response = new GetBookInfoResponse
+                {
+                    CheckedOutInfo = patronDto,
+                    DueDate = dueDate.ToShortDateString(),
+                    CheckedOutDate = checkoutDate.ToShortDateString()
+                };
+
+                return Ok(response);
+            }
+            else
+            {
+                return NotFound($"This book does not have any checked out information available.");
+            }
+
+            
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddNewBook(AddBookRequest request)
         {

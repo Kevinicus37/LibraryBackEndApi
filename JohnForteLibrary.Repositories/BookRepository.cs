@@ -43,7 +43,7 @@ namespace JohnForteLibrary.Repositories
 
         public async Task<Book> FindById(int id)
         {
-            return _dbContext.Books.Include(x => x.Authors).FirstOrDefault(x => x.Id == id);
+            return _dbContext.Books.Include(x => x.Authors).Include(x=> x.Patron).FirstOrDefault(x => x.Id == id);
         }
 
         public async Task<List<Book>> FindBySpecification(ISpecification<Book> query)
