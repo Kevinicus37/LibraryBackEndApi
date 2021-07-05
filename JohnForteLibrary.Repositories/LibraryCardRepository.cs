@@ -41,9 +41,9 @@ namespace JohnForteLibrary.Repositories
             return _dbContext.LibraryCards.ToList();
         }
 
-        public Task<Patron> FindById(int id)
+        public async Task<Patron> FindById(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.LibraryCards.FirstOrDefault(x => x.Id == id);
         }
 
         public async Task<List<Patron>> FindBySpecification(ISpecification<Patron> query)

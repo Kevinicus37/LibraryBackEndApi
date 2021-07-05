@@ -34,6 +34,19 @@ namespace JohnForteLibrary.Domain.ValueObjects
             return Result.Success(new PersonName(firstName, lastName));
         }
 
+        public override string ToString()
+        {
+            if (string.IsNullOrEmpty(FirstName))
+            {
+                return LastName;
+            }
+            else if (string.IsNullOrEmpty(LastName))
+            {
+                return FirstName;
+            }
+            return FirstName + " " + LastName;
+        }
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return FirstName;
