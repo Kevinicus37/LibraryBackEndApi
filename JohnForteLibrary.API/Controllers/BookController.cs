@@ -132,8 +132,8 @@ namespace JohnForteLibrary.API.Controllers
                 var response = new GetBookInfoResponse
                 {
                     CheckedOutInfo = patronDto,
-                    DueDate = dueDate.ToShortDateString(),
-                    CheckedOutDate = checkoutDate.ToShortDateString()
+                    DueDate = dueDate.ToLongDateString(),
+                    CheckedOutDate = checkoutDate.ToLongDateString()
                 };
 
                 return Ok(response);
