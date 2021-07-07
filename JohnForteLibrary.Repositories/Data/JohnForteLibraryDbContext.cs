@@ -11,7 +11,7 @@ namespace JohnForteLibrary.Repositories.Data
     {
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
-        public DbSet<Patron> LibraryCards { get; set; }
+        public DbSet<Patron> Patrons { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -73,7 +73,7 @@ namespace JohnForteLibrary.Repositories.Data
 
             modelBuilder.Entity<Patron>().OwnsOne(p => p.Card, p =>
             {
-                p.Property(pp => pp.CardNumber).HasColumnName("CardNumber");
+                p.Property(pp => pp.Value).HasColumnName("CardNumber");
             });
 
         }

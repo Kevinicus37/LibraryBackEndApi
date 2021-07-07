@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JohnForteLibrary.API.Responses
 {
-    public class AddLibraryCardResponse
+    public class AddPatronResponse
     {
         public CardDto AddedLibraryCard { get; set; }
     }

@@ -9,13 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace JohnForteLibrary.Repositories
 {
-    public class LibraryCardRepository : IReadableRepo<Patron>, IWritableRepo<Patron>
+    public class PatronRepository : IReadableRepo<Patron>, IWritableRepo<Patron>
     {
         private JohnForteLibraryDbContext _dbContext;
 
-        public LibraryCardRepository(JohnForteLibraryDbContext dbContext)
+        public PatronRepository(JohnForteLibraryDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -30,7 +31,7 @@ namespace JohnForteLibrary.Repositories
 
         public async Task<bool> Delete(Patron entityToDelete)
         {
-            _dbContext.LibraryCards.Remove(entityToDelete);
+            _dbContext.Patrons.Remove(entityToDelete);
             await _dbContext.SaveChangesAsync();
 
             return true;
@@ -38,19 +39,19 @@ namespace JohnForteLibrary.Repositories
 
         public async Task<List<Patron>> FindAll()
         {
-            return _dbContext.LibraryCards.ToList();
+            return _dbContext.Patrons.ToList();
         }
 
         public async Task<Patron> FindById(int id)
         {
-            return _dbContext.LibraryCards.FirstOrDefault(x => x.Id == id);
+            return _dbContext.Patrons.FirstOrDefault(x => x.Id == id);
         }
 
         public async Task<List<Patron>> FindBySpecification(ISpecification<Patron> query)
         {
             if (query == null) return await FindAll();
 
-            return _dbContext.LibraryCards.Where(query.ToExpression()).ToList();
+            return _dbContext.Patrons.Where(query.ToExpression()).ToList();
         }
 
         public Task<bool> Update(Patron entityToUpdate)

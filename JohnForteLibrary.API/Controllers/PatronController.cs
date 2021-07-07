@@ -14,23 +14,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace JohnForteLibrary.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LibraryCardController : ControllerBase
+    public class PatronController : ControllerBase
     {
         private IWritableRepo<Patron> _writablePatronsRepo;
         private IReadableRepo<Patron> _patronsRepo;
 
-        public LibraryCardController(IWritableRepo<Patron> writablePatronRepo, IReadableRepo<Patron> patronsRepo)
+        public PatronController(IWritableRepo<Patron> writablePatronRepo, IReadableRepo<Patron> patronsRepo)
         {
             _writablePatronsRepo = writablePatronRepo;
             _patronsRepo = patronsRepo;
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddLibraryCard(AddLibraryCardRequest request)
+        public async Task<IActionResult> AddLibraryCard(AddPatronRequest request)
         {
             var name = PersonName.Create(request.FirstName, request.LastName);
             var address = Address.Create(request.StreetAddress, request.City, (State) Enum.Parse(typeof(State), request.State), request.ZipCode);
@@ -42,27 +43,25 @@ namespace JohnForteLibrary.API.Controllers
             if (creatingLibraryCardResult.IsFailure) throw new ArgumentException(creatingLibraryCardResult.Error);                        
 
             var found = true;
-            string cardNumber = "";
 
-            while (found)
-            {               
-                var random = new Random();
+            Result<CardNumber> cardNumber;
 
-                for (int i = 0; i < 14; i++)
-                    cardNumber += random.Next(0, 9).ToString();
+            do
+            {
+                cardNumber = CardNumber.Create();
 
-                var patronList = await _patronsRepo.FindBySpecification(new CardNumberExistsSpecification(cardNumber));
+                var patronList = await _patronsRepo.FindBySpecification(new CardNumberExistsSpecification(cardNumber.Value));
 
                 if (patronList.Count < 1) found = false;
-            }
 
-            var libraryCard = new LibraryCard(cardNumber);
+            } while (found);
 
-            var patronToAdd = new Patron(name.Value, address.Value, phone.Value, email.Value, libraryCard);
+
+                var patronToAdd = new Patron(name.Value, address.Value, phone.Value, email.Value, cardNumber.Value);
 
             var addedPatron = await _writablePatronsRepo.Add(patronToAdd);
 
-            var response = new AddLibraryCardResponse
+            var response = new AddPatronResponse
             {
                 AddedLibraryCard = MapCard(addedPatron)
             };
@@ -76,7 +75,7 @@ namespace JohnForteLibrary.API.Controllers
                 return new CardDto
                 {
                     Name = patron.Name,
-                    cardNumber = patron.Card.CardNumber
+                    cardNumber = patron.Card.Value
                 };
             }
             return null;

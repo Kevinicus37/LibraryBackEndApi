@@ -39,8 +39,8 @@ namespace JohnForteLibrary.API
             services.AddScoped<IReadableRepo<Book>, BookRepository>();
             services.AddScoped<IWritableRepo<Book>, BookRepository>();
             services.AddScoped<IReadableRepo<Author>, AuthorRepository>();
-            services.AddScoped<IReadableRepo<Patron>, LibraryCardRepository>();
-            services.AddScoped<IWritableRepo<Patron>, LibraryCardRepository>();
+            services.AddScoped<IReadableRepo<Patron>, PatronRepository>();
+            services.AddScoped<IWritableRepo<Patron>, PatronRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
