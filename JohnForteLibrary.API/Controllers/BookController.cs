@@ -21,14 +21,14 @@ namespace JohnForteLibrary.API.Controllers
         private IReadableRepo<Book> _bookRepo;
         private IWritableRepo<Book> _writableBooksRepo;
         private IReadableRepo<Author> _authorRepo;
-        private IReadableRepo<Patron> _libraryCardRepo;
+        private IReadableRepo<Patron> _patronRepo;
 
-        public BookController(IReadableRepo<Book> bookRepo, IWritableRepo<Book> writableRepo, IReadableRepo<Author> authorRepo, IReadableRepo<Patron> libraryCardRepo)
+        public BookController(IReadableRepo<Book> bookRepo, IWritableRepo<Book> writableRepo, IReadableRepo<Author> authorRepo, IReadableRepo<Patron> patronRepo)
         {
             _bookRepo = bookRepo;
             _writableBooksRepo = writableRepo;
             _authorRepo = authorRepo;
-            _libraryCardRepo = libraryCardRepo;
+            _patronRepo = patronRepo;
         }
 
         [HttpGet]
@@ -86,7 +86,7 @@ namespace JohnForteLibrary.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllCheckedOut([FromQuery]string cardnumber)
         {
-            var borrowers = await _libraryCardRepo.FindBySpecification(new CardNumberExistsSpecification(cardnumber));
+            var borrowers = await _patronRepo.FindBySpecification(new CardNumberExistsSpecification(cardnumber));
 
             if (borrowers.Count < 1)
             {
@@ -123,7 +123,7 @@ namespace JohnForteLibrary.API.Controllers
                     Address = book.Patron.Address.ToString(),
                     PhoneNumber = book.Patron.PhoneNumber != null ? book.Patron.PhoneNumber.ToString() : "",
                     Email = book.Patron.Email != null ? book.Patron.Email.ToString() : "",
-                    CardNumber = book.Patron.Card.CardNumber
+                    CardNumber = book.Patron.Card.Value
                 };
 
                 var dueDate = (DateTime)book.DueDate;
@@ -211,7 +211,7 @@ namespace JohnForteLibrary.API.Controllers
                 return NotFound($"There is no book with id {request.BookId}");
             }
 
-            var borrowers = await _libraryCardRepo.FindBySpecification(new CardNumberExistsSpecification(request.CardNumber));
+            var borrowers = await _patronRepo.FindBySpecification(new CardNumberExistsSpecification(request.CardNumber));
 
             if (borrowers.Count < 1) {
 

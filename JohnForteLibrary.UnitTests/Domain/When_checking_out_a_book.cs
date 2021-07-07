@@ -20,7 +20,7 @@ namespace JohnForteLibrary.UnitTests.Domain
             var book = new Book("TestBook", new List<Author> { new Author("William"), new Author("Martin") }, ISBN.Create("1234567891234").Value, 1950);
 
             var patron = new Patron(PersonName.Create("Bob", "Smith").Value, Address.Create("29345 135th St.", "Olathe", State.KS, "66062").Value,
-                            PhoneNumber.Create("183-349-2483").Value, EmailAddress.Create("bsmith@gmail.com").Value, new LibraryCard("19385948394839"));           
+                            PhoneNumber.Create("183-349-2483").Value, EmailAddress.Create("bsmith@gmail.com").Value, new CardNumber("19385948394839"));           
 
             book.CheckoutBook(patron);
 

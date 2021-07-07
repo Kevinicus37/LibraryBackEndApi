@@ -18,7 +18,7 @@ namespace JohnForteLibrary.Domain.Specifications
         {
             if(CardNumber != "")
             {
-                return x => x.Card.CardNumber == CardNumber;
+                return x => x.Card.Value == CardNumber;
             }
 
             return x => true;

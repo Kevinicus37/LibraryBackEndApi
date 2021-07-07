@@ -12,12 +12,12 @@ namespace JohnForteLibrary.Domain
         public Address Address { get; private set; }
         public PhoneNumber PhoneNumber { get; private set; }
         public EmailAddress Email { get; private set; }
-        public LibraryCard Card { get; set; }
+        public CardNumber Card { get; set; }
         public List<Book> CheckedOutBooks { get; private set; } = new List<Book>();
 
         protected Patron() {}
 
-        public Patron(PersonName name, Address address, PhoneNumber number, EmailAddress email, LibraryCard card)
+        public Patron(PersonName name, Address address, PhoneNumber number, EmailAddress email, CardNumber card)
         {
             Name = name;
             Address = address;

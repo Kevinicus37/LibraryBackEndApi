@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JohnForteLibrary.API.Requests
 {
-    public class AddLibraryCardRequest
+    public class AddPatronRequest
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

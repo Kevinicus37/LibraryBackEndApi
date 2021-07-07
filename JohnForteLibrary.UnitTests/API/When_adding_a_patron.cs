@@ -11,7 +11,7 @@ using JohnForteLibrary.Domain.Enums;
 
 namespace JohnForteLibrary.UnitTests.API
 {
-    public class When_adding_a_library_card
+    public class When_adding_a_patron
     {
         [Fact]
         public void With_valid_card_data()
@@ -19,7 +19,7 @@ namespace JohnForteLibrary.UnitTests.API
             var libraryCardRepo = A.Fake<IWritableRepo<Patron>>();
 
             var cardToAdd = new Patron(PersonName.Create("Bob", "Smith").Value, Address.Create("29345 135th St.", "Olathe", State.KS, "66062").Value,
-                            PhoneNumber.Create("183-349-2483").Value, EmailAddress.Create("bsmith@gmail.com").Value, new LibraryCard("19385948394839"));
+                            PhoneNumber.Create("183-349-2483").Value, EmailAddress.Create("bsmith@gmail.com").Value, new CardNumber("19385948394839"));
 
             A.CallTo(() => libraryCardRepo.Add(A<Patron>.Ignored)).Returns(Task.FromResult(cardToAdd));
 
