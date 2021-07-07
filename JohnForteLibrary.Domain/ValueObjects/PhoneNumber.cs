@@ -20,14 +20,14 @@ namespace JohnForteLibrary.Domain.ValueObjects
             var numberOfDashesAndParenthesese = 0;
 
             foreach (char c in number)
-                if (c == '-' || c == '(' || c == ')') numberOfDashesAndParenthesese++;
+                if (c == '-' || c == '(' || c == ')' || c == ' ') numberOfDashesAndParenthesese++;
 
             var numberOfDigits = number.Length - numberOfDashesAndParenthesese;
 
             if (numberOfDigits != 10)
                 return Result.Failure<PhoneNumber>("Phone number should be 10 digits in length.");
 
-            string newNumber = number.Replace("-", "").Replace("(", "").Replace(")", "");
+            string newNumber = number.Replace("-", "").Replace("(", "").Replace(")", "").Replace(" ", "");
             long longNumber = 0;
             bool result = long.TryParse(newNumber, out longNumber);
 
